@@ -1,0 +1,218 @@
+{
+    "symbols": {}, 
+    "enums": {}, 
+    "base_types": {
+        "unsigned char": {
+            "kind": "char", 
+            "size": 1, 
+            "signed": false, 
+            "endian": "little"
+        },
+        "char": {
+            "size": 1,
+            "signed": true,
+            "kind": "char",
+            "endian": "little"
+        },
+        "pointer": {
+            "kind": "int", 
+            "size": 8, 
+            "signed": false, 
+            "endian": "little"
+        },
+        "int": {
+            "size": 4,
+            "signed": true,
+            "kind": "int",
+            "endian": "little"
+          },
+          "unsigned int": {
+            "size": 4,
+            "signed": false,
+            "kind": "int",
+            "endian": "little"
+          }
+    }, 
+    "user_types": {
+        "sshcipher": {
+            "fields": {
+                "name": {
+                    "type": {
+                        "subtype": {
+                            "count": 30, 
+                            "subtype": {
+                                "kind": "base", 
+                                "name": "char"
+                            }, 
+                            "kind": "array"
+                        }, 
+                        "kind": "pointer"
+                    }, 
+                    "offset": 0
+                }
+            }, 
+            "kind": "struct", 
+            "size": 8
+        },
+        "sshenc_61p1": {
+            "fields": {
+                "name": {
+                    "type": {
+                        "subtype": {
+                            "count": 30, 
+                            "subtype": {
+                                "kind": "base", 
+                                "name": "char"
+                            }, 
+                            "kind": "array"
+                        }, 
+                        "kind": "pointer"
+                    }, 
+                    "offset": 0
+                },
+                "cipher": {
+                    "type": {
+                        "subtype": { 
+                            "kind": "struct",
+                            "name": "sshcipher"
+                        }, 
+                        "kind": "pointer"
+                    }, 
+                    "offset": 8
+                },
+                "enabled": {
+                    "type": {
+                        "kind": "base",
+                        "name": "int"
+                    },
+                    "offset": 16
+                },
+                "key_len": {
+                    "type": {
+                        "kind": "base",
+                        "name": "unsigned int"
+                    },
+                    "offset": 20
+                },
+                "block_size": {
+                    "type": {
+                        "kind": "base",
+                        "name": "unsigned int"
+                    },
+                    "offset": 24
+                },
+                "key": {
+                    "type": {
+                        "subtype": {
+                            "kind": "struct", 
+                            "name": "void"
+                        },
+                        "kind": "pointer"
+                    }, 
+                    "offset": 32
+                },
+                "iv": {
+                    "type": {
+                        "subtype": {
+                            "kind": "struct", 
+                            "name": "void"
+                        },
+                        "kind": "pointer"
+                    }, 
+                    "offset": 40
+                }
+            }, 
+            "kind": "struct", 
+            "size": 48
+        },
+        "sshenc_61p2": {
+            "fields": {
+                "name": {
+                    "type": {
+                        "subtype": {
+                            "count": 64, 
+                            "subtype": {
+                                "kind": "base", 
+                                "name": "char"
+                            }, 
+                            "kind": "array"
+                        }, 
+                        "kind": "pointer"
+                    }, 
+                    "offset": 0
+                },
+                "cipher": {
+                    "type": {
+                        "subtype": { 
+                            "kind": "struct",
+                            "name": "sshcipher"
+                        }, 
+                        "kind": "pointer"
+                    }, 
+                    "offset": 8
+                },
+                "enabled": {
+                    "type": {
+                        "kind": "base",
+                        "name": "int"
+                    },
+                    "offset": 16
+                },
+                "key_len": {
+                    "type": {
+                        "kind": "base",
+                        "name": "unsigned int"
+                    },
+                    "offset": 20
+                },
+                "iv_len": {
+                    "type": {
+                        "kind": "base",
+                        "name": "unsigned int"
+                    },
+                    "offset": 24
+                },
+                "block_size": {
+                    "type": {
+                        "kind": "base",
+                        "name": "unsigned int"
+                    },
+                    "offset": 28
+                },
+                "key": {
+                    "type": {
+                        "subtype": {
+                            "kind": "struct", 
+                            "name": "void"
+                        },
+                        "kind": "pointer"
+                    }, 
+                    "offset": 32
+                },
+                "iv": {
+                    "type": {
+                        "subtype": {
+                            "kind": "struct", 
+                            "name": "void"
+                        },
+                        "kind": "pointer"
+                    }, 
+                    "offset": 40
+                }
+            }, 
+            "kind": "struct", 
+            "size": 48
+        }
+    },
+    
+    
+    
+    "metadata": {
+        "producer": {
+            "version": "0.0.1", 
+            "name": "jelleverg-by-hand", 
+            "datetime": "2020-09-03T11:28:24.000000"
+        }, 
+        "format": "4.1.0"
+    }
+}
