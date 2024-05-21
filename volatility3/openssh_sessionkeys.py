@@ -1,10 +1,10 @@
-from volatility.framework.configuration import requirements
-from volatility.framework import interfaces, renderers, symbols, objects, constants
-from volatility.framework.symbols import intermed
-from volatility.framework.objects import utility
-from volatility.framework.exceptions import PagedInvalidAddressException
+from volatility3.framework.configuration import requirements
+from volatility3.framework import interfaces, renderers, symbols, objects, constants
+from volatility3.framework.symbols import intermed
+from volatility3.framework.objects import utility
+from volatility3.framework.exceptions import PagedInvalidAddressException
 from typing import Callable, Iterable, List, Any
-from volatility.plugins.linux import pslist
+from volatility3.plugins.linux import pslist
 import logging
 import binascii
 import json
@@ -185,15 +185,17 @@ class SSHKeyExtractor(object):
 
 
 class SSHKeys(interfaces.plugins.PluginInterface):
+    _required_framework_version = (2, 0, 0)
 
     @classmethod
     def get_requirements(cls) -> List[interfaces.configuration.RequirementInterface]:
         return [
-            requirements.TranslationLayerRequirement(name = 'primary',
-                                                     description = 'Memory layer for the kernel',
-                                                     architectures = ["Intel32", "Intel64"]),
-            requirements.SymbolTableRequirement(name = "vmlinux", description = "Linux kernel symbols"),
-            requirements.PluginRequirement(name = 'pslist', plugin = pslist.PsList, version = (1, 0, 0)),
+            requirements.ModuleRequirement(
+                name="kernel",
+                description="Linux kernel",
+                architectures=["Intel32", "Intel64"],
+            ),
+            requirements.PluginRequirement(name = 'pslist', plugin = pslist.PsList, version = (2, 2, 0)),
             requirements.ListRequirement(name = 'pid',
                                          element_type = int,
                                          description = "Process IDs to include (all other processes are excluded)",
@@ -229,7 +231,8 @@ class SSHKeys(interfaces.plugins.PluginInterface):
 
     def _generator(self, tasks):
         result = []
-        is_32bit = not symbols.symbol_table_is_64bit(self.context, self.config["vmlinux"])
+        kernel = self.context.modules[self.config['kernel']]
+        is_32bit = not symbols.symbol_table_is_64bit(self._context, kernel.symbol_table_name)
         if is_32bit:
             openssh_json_file = "openssh32"
         else:
@@ -261,7 +264,7 @@ class SSHKeys(interfaces.plugins.PluginInterface):
     def run(self):
         data = []
         filter_func = self.create_proc_filter()
-        tasks = pslist.PsList.list_tasks(self.context, self.config['primary'], self.config['vmlinux'], filter_func = filter_func)
+        tasks = pslist.PsList.list_tasks(self.context, self.config['kernel'], filter_func=filter_func)
         output_file =  self.config.get('out', None)
         
         keys = self._generator(tasks)
