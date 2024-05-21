@@ -238,8 +238,8 @@ class SSHKeys(interfaces.plugins.PluginInterface):
         else:
             openssh_json_file = "openssh64"
 
-        openssh_table_name = intermed.IntermediateSymbolTable.create(self.context, self.config_path, 'linux', openssh_json_file)
-        
+        openssh_table_name = intermed.IntermediateSymbolTable.create(self.context, self.config_path, '', openssh_json_file)
+
         for task in tasks:
             if not task.mm:
                 continue
